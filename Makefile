@@ -8,6 +8,9 @@ MAP_FILE = $(PROJECT).map
 #FreeRTOS kernel source
 FREERTOS ?= ./Libraries/freeRTOS
 
+#CMSIS Library
+CMSIS ?= ./Libraries/CMSIS
+
 # set the path to STM32F4xx firmware package
 STDP ?= ./
 
@@ -71,7 +74,7 @@ LDFLAGS += -mcpu=cortex-m4 -march=armv7e-m -mtune=cortex-m4 -mlittle-endian -mth
 CFLAGS += -I $(INCLUDE)
 OBJS = \
     $(SOURCE)/main.o \
-    $(SOURCE)/system_stm32f4xx.o
+    $(CMSIS)/Device/system_stm32f4xx.o
 
 #hardware configure
 #CFLAGS += -I $(INCLUDE)
@@ -83,12 +86,12 @@ OBJS += $(SOURCE)/myio.o \
 	$(SOURCE)/String.o 
 
 # STARTUP FILE
-OBJS += $(SOURCE)/startup_stm32f4xx.o
+OBJS += $(CMSIS)/Device/startup_stm32f4xx.o
 #OBJS += $(SOURCE)/startup_stm32f429_439xx.o
 
 # CMSIS
-CFLAGS += -I$(STDP)/Libraries/CMSIS/Device/ST/STM32F4xx/Include
-CFLAGS += -I$(STDP)/Libraries/CMSIS/Include
+CFLAGS += -I $(CMSIS)/Device
+CFLAGS += -I $(CMSIS)/Include
 #LIBS += $(STDP)/Libraries/CMSIS/Lib/GCC/libarm_cortexM4lf_math.a
 
 # STM32F4xx_StdPeriph_Driver
