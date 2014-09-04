@@ -48,8 +48,8 @@ void vATask(void *pvParameters)
 	char A[] = "Task A running... ";
 	char who = 'A';
 	while(1){
-		vTaskDelay(100);
-		uprintf("Task %c running\n", who);	
+		vTaskDelay(1000);
+		uprintf("\nTask %c running\n", who);	
 	}
 }
 
@@ -57,8 +57,8 @@ void vBTask(void *pvParameters)
 {
 	char A[] = "Task B running... ";
 	while(1){
-		vTaskDelay(100);
-		uprintf("%s\n", A);	
+		vTaskDelay(1000);
+		uprintf("\n%s\n", A);	
 	}
 }
 
