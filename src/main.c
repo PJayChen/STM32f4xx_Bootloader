@@ -10,6 +10,11 @@
 #include "hw_conf.h"
 #include "myio.h"
 
+/*Peripherals*/
+#include "stm32f4_evb_sdio_sd.h"
+#include "stm32f4_evb_lcd.h"
+#include "stm32f4_evb_fsmc_psram.h"
+
 /* semaphores, queues declarations */
 xQueueHandle xQueueUARTRecvie;
 xQueueHandle xQueueUSARTSend;
@@ -24,7 +29,8 @@ typedef struct {
 	char ch;
 } serial_ch_msg;
 
-extern char* pUSARTtxData;
+/*Private variables ---------------------------------------*/
+SD_Error Status = SD_OK;
 
 /* Private functions ---------------------------------------------------------*/
 char receive_byte()
@@ -69,10 +75,17 @@ int main(void)
     /*for UASRT Tx usage token*/
 	xSemUSART1send = xSemaphoreCreateBinary();
 
-	/* initialize hardware... */
+	/* initialize USART hardware... */
 	prvSetupHardware();
+	_print("USART initialize finish...\n\r");
 
-	_print("Hardware initialize finish...\n\r");
+	PSRAM_Init();
+	LCD_Init();
+	LCD_Clear(LCD_COLOR_WHITE);
+	LCD_SetTextColor(LCD_COLOR_BLUE);
+	//LCD_DisplayStringLine(LCD_LINE_0, (uint8_t *)"test!!!");
+	
+	Status = SD_Init();
 
 	xTaskCreate( vATask, "send", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
 	xTaskCreate( vBTask, "send", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);

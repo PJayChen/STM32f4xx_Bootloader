@@ -110,7 +110,19 @@ OBJS += \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_tim.o \
-    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.o
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_sdio.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fsmc.o
+
+# Peripherals Driver
+CFLAGS += -I ./Utilities
+OBJS += ./Utilities/stm32f4_evb.o
+OBJS += ./Utilities/stm32f4_evb_sdio_sd.o
+OBJS += ./Utilities/stm32f4_evb_lcd.o
+OBJS += ./Utilities/stm32f4_evb_fsmc_psram.o
+CFLAGS += -I ./Utilities/Common
+OBJS += ./Utilities/Common/lcd_log.o
+OBJS += ./Utilities/Common/fonts.o
 
 # FreeRTOS kernel
 CFLAGS += -I$(FREERTOS)/include
